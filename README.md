@@ -99,17 +99,23 @@ Missing sources are skipped. Windows PowerShell example: `$env:PORT=5000; npm st
 
 ## Background collection (no always-on server)
 
-The dashboard server only needs to run while you're looking at it. History is kept by a
-scheduled `npm run collect` (~1s, ~110 MB peak, then exits).
+The dashboard server only needs to run while you look at it. History is kept by a scheduled
+`collect` run (~1s, ~110 MB peak, then exits). One command on every OS:
 
-**macOS (launchd, every 30 min)** — `~/Library/LaunchAgents/com.hasan.token-tracker-collect.plist`,
-logs in `~/Library/Logs/token-tracker-collect.log`. Use `/bin/zsh -c 'cd … && node …'`, not
-`WorkingDirectory`/log paths on an external volume (launchd fails with exit 78 EX_CONFIG).
+```bash
+npm run schedule:install     # macOS → launchd · Linux → crontab · Windows → Task Scheduler
+npm run schedule:status
+npm run schedule:uninstall
 ```
-launchctl bootout   gui/$(id -u)/com.hasan.token-tracker-collect   # stop
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.hasan.token-tracker-collect.plist  # start
-```
-**Linux (cron):** `*/30 * * * * cd /path/token-tracker && node --disable-warning=ExperimentalWarning server/cli-collect.ts`
-**Windows (Task Scheduler):** `schtasks /create /tn TokenTracker /sc minute /mo 30 /tr "cmd /c cd /d C:\path\token-tracker && npm run collect"`
+Interval: `TT_INTERVAL_MIN` (default 30), e.g. `TT_INTERVAL_MIN=60 npm run schedule:install`
+(PowerShell: `$env:TT_INTERVAL_MIN=60; npm run schedule:install`). Re-run install after moving the folder.
+
+| OS | Mechanism | Log |
+|---|---|---|
+| macOS | LaunchAgent `com.hasan.token-tracker-collect` (catches up after sleep) | `~/Library/Logs/token-tracker-collect.log` |
+| Linux | user crontab line tagged `# token-tracker-collect` (needs `cron`/`cronie`) | `~/.local/state/token-tracker/collect.log` |
+| Windows | Scheduled Task `TokenTrackerCollect`, hidden window, `StartWhenAvailable` | `%LOCALAPPDATA%\token-tracker\collect.log` |
+
+Preview without changing anything: `node scripts/schedule.mjs install --dry-run --platform=win32`.
 
 View: `npm start` → http://127.0.0.1:4747, Ctrl+C when done.

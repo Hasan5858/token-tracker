@@ -11,7 +11,10 @@
     "dev:web": "astro dev",
     "build": "astro build",
     "start": "node --disable-warning=ExperimentalWarning server/index.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "schedule:install": "node scripts/schedule.mjs install",
+    "schedule:uninstall": "node scripts/schedule.mjs uninstall",
+    "schedule:status": "node scripts/schedule.mjs status"
   },
   "engines": {
     "node": ">=23.6"
