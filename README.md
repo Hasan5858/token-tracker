@@ -4,18 +4,20 @@ Local, **read-only** AI token usage dashboard for **Hermes** (all profiles), **Z
 **Claude Code** and **Kimi Code**. Hono API + Astro/React/Tailwind v4/Recharts UI, served on a single port.
 Never deployed — sudhu nijer machine-e cholbe.
 
-## ✅ Tested
+## ✅ Tested platforms
 
-| Tool | Status | Notes |
-|---|---|---|
-| **Antigravity** | ✅ Tested — working | Token usage per conversation step is tracked correctly |
-| **Claude Code** (CLI / VS Code extension) | ✅ Tested — working | Token usage per API response is tracked correctly (deduplicated) |
-| Hermes (all profiles) | ✅ Working | Verified against `state.db` |
-| ZCode | ✅ Working | Totals match `model_usage` exactly |
-| Kimi Code (VS Code extension) | ✅ Working | Totals match raw `wire.jsonl` usage records |
-| AutoClaw | ⏭️ Skipped | No local token-usage records found yet |
+| Tool | macOS | Windows | Linux |
+|---|---|---|---|
+| Hermes (all profiles) | ✅ Tested & working | — | ⚪ Not tested (should work) |
+| ZCode | ✅ Tested & working | — | ⚪ Not tested (should work) |
+| Antigravity | ✅ Tested & working | ✅ Tested & working | ⚪ Not tested (should work) |
+| Claude Code (CLI / VS Code extension) | ✅ Tested & working | ✅ Tested & working | ⚪ Not tested (should work) |
+| Kimi Code (VS Code extension) | ✅ Tested & working | — | ⚪ Not tested (should work) |
+| AutoClaw | ⏭️ Skipped — no local token-usage records found yet | | |
 
-Tested on **macOS**. Linux/Windows support is implemented (paths, scheduler) but not yet tested on real machines.
+- **macOS:** every tracker tested and working.
+- **Windows:** Antigravity and Claude Code tested and working. Other tools not yet tried on Windows.
+- **Linux:** not tested yet, but paths and the cron scheduler are implemented, so it should work.
 
 ## Commands
 
