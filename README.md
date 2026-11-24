@@ -96,3 +96,20 @@ Data paths default to `~/.hermes`, `~/.zcode`, `~/.gemini/antigravity` under the
 | `TT_TZ_OFFSET` | machine timezone offset (hours) |
 
 Missing sources are skipped. Windows PowerShell example: `$env:PORT=5000; npm start`.
+
+## Background collection (no always-on server)
+
+The dashboard server only needs to run while you're looking at it. History is kept by a
+scheduled `npm run collect` (~1s, ~110 MB peak, then exits).
+
+**macOS (launchd, every 30 min)** — `~/Library/LaunchAgents/com.hasan.token-tracker-collect.plist`,
+logs in `~/Library/Logs/token-tracker-collect.log`. Use `/bin/zsh -c 'cd … && node …'`, not
+`WorkingDirectory`/log paths on an external volume (launchd fails with exit 78 EX_CONFIG).
+```
+launchctl bootout   gui/$(id -u)/com.hasan.token-tracker-collect   # stop
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.hasan.token-tracker-collect.plist  # start
+```
+**Linux (cron):** `*/30 * * * * cd /path/token-tracker && node --disable-warning=ExperimentalWarning server/cli-collect.ts`
+**Windows (Task Scheduler):** `schtasks /create /tn TokenTracker /sc minute /mo 30 /tr "cmd /c cd /d C:\path\token-tracker && npm run collect"`
+
+View: `npm start` → http://127.0.0.1:4747, Ctrl+C when done.
