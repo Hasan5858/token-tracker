@@ -77,7 +77,7 @@ export function daily({ from, to }: Range) {
 export function sessions({ from, to }: Range, tool?: string, limit = 50) {
   const params: any[] = [from, to];
   let where = 'date between ? and ?';
-  if (tool && ['hermes', 'zcode', 'antigravity'].includes(tool)) { where += ' and tool = ?'; params.push(tool); }
+  if (tool && ['hermes', 'zcode', 'antigravity', 'claude', 'kimi'].includes(tool)) { where += ' and tool = ?'; params.push(tool); }
   params.push(Math.min(Math.max(limit, 1), 500));
   return store().prepare(`select tool, profile, session_id sessionId, max(session_title) title,
     group_concat(distinct model) models, min(ts) firstTs, max(ts) lastTs, ${SUMS}

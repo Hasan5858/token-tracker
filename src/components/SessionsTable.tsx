@@ -4,7 +4,7 @@ import { dhakaDateTime, full, human, pct } from '../lib/format';
 import { TOOL_COLOR, TOOL_LABEL } from '../lib/colors';
 import { Segmented, Skeleton } from './ui';
 
-type ToolFilter = '' | 'hermes' | 'zcode' | 'antigravity';
+type ToolFilter = '' | 'hermes' | 'zcode' | 'antigravity' | 'claude' | 'kimi';
 
 export function SessionsTable({ from, to, version }: { from: string; to: string; version: number }) {
   const [tool, setTool] = useState<ToolFilter>('');
@@ -22,7 +22,7 @@ export function SessionsTable({ from, to, version }: { from: string; to: string;
     <div>
       <div className="mb-3 flex justify-end">
         <Segmented value={tool} onChange={setTool} options={[
-          { value: '', label: 'All' }, { value: 'hermes', label: 'Hermes' }, { value: 'zcode', label: 'ZCode' }, { value: 'antigravity', label: 'Antigravity' },
+          { value: '', label: 'All' }, { value: 'hermes', label: 'Hermes' }, { value: 'zcode', label: 'ZCode' }, { value: 'antigravity', label: 'Antigravity' }, { value: 'claude', label: 'Claude' }, { value: 'kimi', label: 'Kimi' },
         ]} />
       </div>
       <div className="scroll-thin overflow-x-auto">

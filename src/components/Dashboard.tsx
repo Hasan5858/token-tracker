@@ -87,7 +87,7 @@ export default function Dashboard() {
           </div>
           <div>
             <h1 className="font-display text-lg font-semibold leading-tight tracking-tight">Token Tracker</h1>
-            <p className="text-xs text-ink-400">Hermes · ZCode · Antigravity — local, read-only</p>
+            <p className="text-xs text-ink-400">Hermes · ZCode · Antigravity · Claude Code · Kimi — local, read-only</p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">

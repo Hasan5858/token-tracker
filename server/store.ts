@@ -4,6 +4,8 @@ import { join } from 'node:path';
 import { DATA_DIR, type UsageRecord } from './lib.ts';
 import { collectHermes } from './collectors/hermes.ts';
 import { collectZcode } from './collectors/zcode.ts';
+import { collectClaude } from './collectors/claude.ts';
+import { collectKimi } from './collectors/kimi.ts';
 import { collectAntigravity, antigravityTitles } from './collectors/antigravity.ts';
 
 /** Our own snapshot DB (the ONLY database we ever write to). */
@@ -50,11 +52,13 @@ function doRefresh(): RefreshResult {
   const stampQ = db.prepare('select mtime_ms, size from file_stamps where path = ?');
   const h = collectHermes();
   const z = collectZcode();
+  const cl = collectClaude();
+  const k = collectKimi();
   const a = collectAntigravity((s) => {
     const row = stampQ.get(s.path) as any;
     return !!row && row.mtime_ms === s.mtimeMs && row.size === s.size;
   });
-  const all: UsageRecord[] = [...h.records, ...z.records, ...a.records];
+  const all: UsageRecord[] = [...h.records, ...z.records, ...a.records, ...cl.records, ...k.records];
   const up = db.prepare(`insert into usage (id, tool, profile, model, provider, session_id, session_title, ts, date,
       input, output, cache_read, cache_write, reasoning, calls, cost_usd, ingested_at)
     values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
@@ -87,7 +91,7 @@ function doRefresh(): RefreshResult {
   const totalRows = (db.prepare('select count(*) n from usage').get() as any).n;
   const res: RefreshResult = {
     at: now, ms: Math.round(performance.now() - t0), upserted: all.length, totalRows, bySource,
-    errors: [...h.errors, ...z.errors, ...a.errors], antigravity: { scanned: a.scanned, skipped: a.skipped },
+    errors: [...h.errors, ...z.errors, ...a.errors, ...cl.errors, ...k.errors], antigravity: { scanned: a.scanned, skipped: a.skipped },
   };
   db.prepare("insert into meta (key, value) values ('last_refresh_result', ?) on conflict(key) do update set value=excluded.value").run(JSON.stringify(res));
   return res;

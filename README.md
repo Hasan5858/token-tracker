@@ -82,6 +82,16 @@ src/
 scripts/dev.mjs       runs API + Astro dev together
 ```
 
+## More sources: Claude Code & Kimi Code
+
+| Source | Path | Notes |
+|---|---|---|
+| Claude Code | `~/.claude/projects/**/*.jsonl` (`TT_CLAUDE_HOME` / `CLAUDE_CONFIG_DIR`) | assistant lines deduped on `message.id + requestId` (one response spans several lines); `input_tokens` excludes cache; `<synthetic>` rows skipped |
+| Kimi Code (VS Code ext / CLI) | `~/.kimi-code/sessions/*/*/agents/*/wire.jsonl` (`TT_KIMI_HOME`) | `usage.record` lines per turn: `inputOther` = fresh input, `inputCacheRead`, `output`; title from `state.json` |
+| AutoClaw | — | skipped: app installed but no local token-usage records found |
+
+Missing sources are skipped automatically.
+
 ## Windows / Linux
 
 Works on macOS, Linux and Windows (Node >= 23.6, uses built-in `node:sqlite` — no native build).
