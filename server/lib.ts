@@ -8,7 +8,7 @@ export const HOME = homedir();
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const DATA_DIR = join(ROOT, 'data');
 
-/** Local timezone offset in hours. Default Asia/Dhaka (UTC+6, no DST). */
+/** Local timezone offset in hours. Default: machine timezone. */
 export const TZ_OFFSET_H = Number(process.env.TT_TZ_OFFSET ?? -new Date().getTimezoneOffset() / 60);
 
 export type Tool = 'hermes' | 'zcode' | 'antigravity' | 'claude' | 'kimi';
@@ -23,7 +23,7 @@ export interface UsageRecord {
   sessionId: string;
   sessionTitle: string;
   ts: number; // unix seconds
-  date: string; // YYYY-MM-DD local (Dhaka)
+  date: string; // YYYY-MM-DD local
   input: number;
   output: number;
   cacheRead: number;

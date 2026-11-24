@@ -15,7 +15,7 @@ npm run collect      # one-shot ingest into data/usage.db (also runs on server s
 npm run typecheck
 ```
 
-Env vars: `PORT` (4747), `HOST` (127.0.0.1), `TT_AUTO_REFRESH_MIN` (5; 0 = off), `TT_TZ_OFFSET` (6 = Asia/Dhaka), `TT_DB` (snapshot path).
+Env vars: `PORT` (4747), `HOST` (127.0.0.1), `TT_AUTO_REFRESH_MIN` (5; 0 = off), `TT_TZ_OFFSET` (default: machine timezone), `TT_DB` (snapshot path).
 
 Requires **Node ≥ 23.6** (uses built-in `node:sqlite` and native TypeScript type-stripping — no native deps, no build step for the server).
 
@@ -32,7 +32,7 @@ Foreign DBs are opened with `new DatabaseSync(path, { readOnly: true })`; if tha
 ### Normalized record
 
 ```ts
-{ tool, profile, model, provider, sessionId, sessionTitle, ts, date /* YYYY-MM-DD Asia/Dhaka */,
+{ tool, profile, model, provider, sessionId, sessionTitle, ts, date /* YYYY-MM-DD local */,
   input /* FRESH input */, output, cacheRead, cacheWrite, reasoning, calls, costUsd | null }
 ```
 
@@ -54,7 +54,7 @@ Every refresh (server start, every 5 min, `POST /api/refresh`, the UI **Refresh*
 
 ## Caveats / jani rakhun
 
-- **Hermes daily attribution:** `session_model_usage` is cumulative per session/model, so the whole row is dated by its `last_seen` (Asia/Dhaka). A long session spanning midnight lands entirely on its last day. `messages.token_count` exists but is empty, so per-message attribution isn't possible. Hourly view for Hermes uses the same `last_seen`.
+- **Hermes daily attribution:** `session_model_usage` is cumulative per session/model, so the whole row is dated by its `last_seen` (local time). A long session spanning midnight lands entirely on its last day. `messages.token_count` exists but is empty, so per-message attribution isn't possible. Hourly view for Hermes uses the same `last_seen`.
 - Hermes rows are keyed by (session, model, provider, base_url, mode, task); auxiliary tasks (`title_generation`, `vision`, …) are counted and labelled in the session title.
 - **Antigravity has no model name** in transcripts → labelled `Antigravity (unknown)`. Cost is unknown.
 - **ZCode** failed/rate-limited requests with zero tokens are skipped. No cost data.
@@ -71,7 +71,7 @@ server/
   app.ts              API routes
   queries.ts          summary / daily / sessions / hourly SQL
   store.ts            snapshot DB (data/usage.db), upsert + incremental refresh
-  lib.ts              types, Dhaka date helpers, read-only DB opener
+  lib.ts              types, local-date helpers, read-only DB opener
   collectors/         hermes.ts · zcode.ts · antigravity.ts
   cli-collect.ts      `npm run collect`
 src/
