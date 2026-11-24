@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/space-grotesk";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --font-display: "Space Grotesk Variable", "Inter Variable", sans-serif;
+  --color-ink-950: #07080a;
+  --color-ink-900: #0c0e11;
+  --color-ink-850: #111418;
+  --color-ink-800: #161a1f;
+  --color-ink-700: #22272e;
+  --color-ink-600: #2e353e;
+  --color-ink-400: #7d8793;
+  --color-ink-300: #98a1ab;
+  --color-ink-100: #e6e9ec;
+  --color-signal: #d4ff3a;
+  --color-signal-dim: #9cbc2a;
+  --color-ember: #ff8a3d;
+  --color-tide: #3ad0ff;
+  --color-rose: #ff5c7a;
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+:root { color-scheme: dark; }
+html, body { background: var(--color-ink-950); color: var(--color-ink-100); }
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+  min-height: 100vh;
+}
+/* blueprint grid + vignette */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 100%);
+}
+body::after {
+  content: ""; position: fixed; inset: -20% -10% auto -10%; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 50% 60% at 20% 0%, rgba(212,255,58,0.07), transparent 70%),
+              radial-gradient(ellipse 40% 50% at 85% 10%, rgba(58,208,255,0.05), transparent 70%);
+}
+#app { position: relative; z-index: 1; }
+
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.panel {
+  background: linear-gradient(180deg, rgba(22,26,31,0.82), rgba(12,14,17,0.82));
+  border: 1px solid var(--color-ink-700);
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px -24px rgba(0,0,0,0.8);
+  backdrop-filter: blur(6px);
+}
+.label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-400); font-weight: 600; }
+.tick-corner { position: relative; }
+.tick-corner::before, .tick-corner::after {
+  content: ""; position: absolute; width: 8px; height: 8px; border-color: var(--color-ink-600); border-style: solid;
+}
+.tick-corner::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; border-top-left-radius: 14px; }
+.tick-corner::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; border-bottom-right-radius: 14px; }
+::selection { background: var(--color-signal); color: #000; }
+.scroll-thin::-webkit-scrollbar { height: 6px; width: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--color-ink-600); border-radius: 3px; }
+.recharts-wrapper *:focus { outline: none; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.live-dot { animation: pulse-dot 2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

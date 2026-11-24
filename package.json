@@ -1,0 +1,40 @@
+{
+  "name": "token-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local, read-only AI token usage dashboard (Hermes, ZCode, Antigravity)",
+  "scripts": {
+    "collect": "node --disable-warning=ExperimentalWarning server/cli-collect.ts",
+    "dev": "node scripts/dev.mjs",
+    "dev:api": "node --disable-warning=ExperimentalWarning --watch server/index.ts",
+    "dev:web": "astro dev",
+    "build": "astro build",
+    "start": "NODE_ENV=production node --disable-warning=ExperimentalWarning server/index.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=23.6"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.1.9",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@hono/node-server": "^2.1.11",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "hono": "^4.13.21",
+    "lucide-react": "^1.79.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.11.1",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
