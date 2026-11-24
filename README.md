@@ -1,8 +1,21 @@
 # Token Tracker
 
-Local, **read-only** AI token usage dashboard for **Hermes** (all profiles), **ZCode** and **Antigravity**.
-Hono API + Astro/React/Tailwind v4/Recharts UI, served on a single port. Never deployed — sudhu nijer machine-e cholbe.
+Local, **read-only** AI token usage dashboard for **Hermes** (all profiles), **ZCode**, **Antigravity**,
+**Claude Code** and **Kimi Code**. Hono API + Astro/React/Tailwind v4/Recharts UI, served on a single port.
+Never deployed — sudhu nijer machine-e cholbe.
 
+## ✅ Tested
+
+| Tool | Status | Notes |
+|---|---|---|
+| **Antigravity** | ✅ Tested — working | Token usage per conversation step is tracked correctly |
+| **Claude Code** (CLI / VS Code extension) | ✅ Tested — working | Token usage per API response is tracked correctly (deduplicated) |
+| Hermes (all profiles) | ✅ Working | Verified against `state.db` |
+| ZCode | ✅ Working | Totals match `model_usage` exactly |
+| Kimi Code (VS Code extension) | ✅ Working | Totals match raw `wire.jsonl` usage records |
+| AutoClaw | ⏭️ Skipped | No local token-usage records found yet |
+
+Tested on **macOS**. Linux/Windows support is implemented (paths, scheduler) but not yet tested on real machines.
 
 ## Commands
 
