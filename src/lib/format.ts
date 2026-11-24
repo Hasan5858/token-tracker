@@ -48,8 +48,8 @@ export function ago(tsSec: number | undefined): string {
   return `${Math.round(s / 86400)}d ago`;
 }
 
-/** Local Dhaka-ish date for timestamp, matching server attribution (UTC+6). */
+/** Local date for timestamp (browser timezone). */
 export function dhakaDateTime(tsSec: number): string {
-  const d = new Date((tsSec + 6 * 3600) * 1000).toISOString();
+  const d = new Date((tsSec - new Date().getTimezoneOffset() * 60) * 1000).toISOString();
   return `${shortDate(d.slice(0, 10))} · ${d.slice(11, 16)}`;
 }

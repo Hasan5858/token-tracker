@@ -9,7 +9,7 @@ export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const DATA_DIR = join(ROOT, 'data');
 
 /** Local timezone offset in hours. Default Asia/Dhaka (UTC+6, no DST). */
-export const TZ_OFFSET_H = Number(process.env.TT_TZ_OFFSET ?? 6);
+export const TZ_OFFSET_H = Number(process.env.TT_TZ_OFFSET ?? -new Date().getTimezoneOffset() / 60);
 
 export type Tool = 'hermes' | 'zcode' | 'antigravity';
 

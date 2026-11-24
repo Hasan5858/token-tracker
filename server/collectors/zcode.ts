@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { HOME, hasTable, localDate, num, openReadOnly, type UsageRecord } from '../lib.ts';
 
-export const ZCODE_DB = join(HOME, '.zcode', 'cli', 'db', 'db.sqlite');
+export const ZCODE_DB = join(process.env.TT_ZCODE_HOME ?? join(HOME, '.zcode'), 'cli', 'db', 'db.sqlite');
 
 /**
  * ZCode model_usage: one row per request. started_at is in MILLISECONDS.

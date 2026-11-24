@@ -64,10 +64,10 @@ export function Hero({ s, hourly }: { s: Summary; hourly: number[] }) {
   );
 }
 
-/** 24 vertical bars: today's tokens by hour (Dhaka). */
+/** 24 vertical bars: today's tokens by hour (local). */
 function HourStrip({ hourly }: { hourly: number[] }) {
   const max = Math.max(1, ...hourly);
-  const nowH = new Date(Date.now() + 6 * 3600e3).getUTCHours();
+  const nowH = new Date().getHours();
   return (
     <div className="w-full max-w-md shrink-0">
       <div className="mb-2 flex justify-between label"><span>By hour</span><span className="num normal-case tracking-normal">peak {human(max)}</span></div>

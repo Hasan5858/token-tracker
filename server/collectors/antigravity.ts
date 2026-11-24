@@ -2,7 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { HOME, hasTable, localDate, num, openReadOnly, type UsageRecord } from '../lib.ts';
 
-const AG = join(HOME, '.gemini', 'antigravity');
+const AG = process.env.TT_ANTIGRAVITY_HOME ?? join(HOME, '.gemini', 'antigravity');
 export const AG_BRAIN = join(AG, 'brain');
 const AG_SUMMARIES = join(AG, 'conversation_summaries.db');
 

@@ -4,7 +4,7 @@ import { HOME, hasTable, localDate, num, openReadOnly, type UsageRecord } from '
 
 /** Discover Hermes profiles: ~/.hermes/state.db = 'default', plus ~/.hermes/profiles/<name>/state.db */
 export function hermesProfiles(): { profile: string; path: string }[] {
-  const base = join(HOME, '.hermes');
+  const base = process.env.TT_HERMES_HOME ?? process.env.HERMES_HOME ?? join(HOME, '.hermes');
   const out: { profile: string; path: string }[] = [];
   if (existsSync(join(base, 'state.db'))) out.push({ profile: 'default', path: join(base, 'state.db') });
   const pdir = join(base, 'profiles');

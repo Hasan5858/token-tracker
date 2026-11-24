@@ -81,3 +81,18 @@ src/
   styles/global.css   Tailwind v4 theme, fonts (@fontsource: Inter, JetBrains Mono, Space Grotesk)
 scripts/dev.mjs       runs API + Astro dev together
 ```
+
+## Windows / Linux
+
+Works on macOS, Linux and Windows (Node >= 23.6, uses built-in `node:sqlite` — no native build).
+Data paths default to `~/.hermes`, `~/.zcode`, `~/.gemini/antigravity` under the user's home
+(`%USERPROFILE%` on Windows). Override if a tool stores data elsewhere:
+
+| Env var | Default |
+|---|---|
+| `TT_HERMES_HOME` (or `HERMES_HOME`) | `~/.hermes` |
+| `TT_ZCODE_HOME` | `~/.zcode` |
+| `TT_ANTIGRAVITY_HOME` | `~/.gemini/antigravity` |
+| `TT_TZ_OFFSET` | machine timezone offset (hours) |
+
+Missing sources are skipped. Windows PowerShell example: `$env:PORT=5000; npm start`.

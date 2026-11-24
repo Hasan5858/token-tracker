@@ -152,7 +152,7 @@ export default function Dashboard() {
           </div>
 
           <Panel title="Activity calendar" icon={<CalendarDays />} delay={280}
-            right={<span className="text-[11px] text-ink-400">all sources · Asia/Dhaka days</span>}>
+            right={<span className="text-[11px] text-ink-400">all sources · local days</span>}>
             {all ? <Heatmap d={all} /> : <Skeleton className="h-[140px]" />}
           </Panel>
 

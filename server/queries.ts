@@ -1,5 +1,5 @@
 import { store } from './store.ts';
-import { addDays, todayLocal } from './lib.ts';
+import { TZ_OFFSET_H, addDays, todayLocal } from './lib.ts';
 
 export interface Range { from: string; to: string }
 
@@ -86,7 +86,7 @@ export function sessions({ from, to }: Range, tool?: string, limit = 50) {
 
 /** Tokens per local hour for one day (Antigravity/ZCode are per-request; Hermes is per-session-model, dated by last_seen). */
 export function hourly(date: string) {
-  const off = (Number(process.env.TT_TZ_OFFSET ?? 6)) * 3600;
+  const off = TZ_OFFSET_H * 3600;
   const rows = store().prepare(`select cast(((ts + ?) % 86400) / 3600 as integer) h, sum(input + output + cache_read + cache_write) total
     from usage where date = ? group by h`).all(off, date) as any[];
   const out = new Array(24).fill(0);

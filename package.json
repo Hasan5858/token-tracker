@@ -10,7 +10,7 @@
     "dev:api": "node --disable-warning=ExperimentalWarning --watch server/index.ts",
     "dev:web": "astro dev",
     "build": "astro build",
-    "start": "NODE_ENV=production node --disable-warning=ExperimentalWarning server/index.ts",
+    "start": "node --disable-warning=ExperimentalWarning server/index.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "engines": {
